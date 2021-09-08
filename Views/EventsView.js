@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, Text, View} from 'react-native';
-import EventsItem from '../components/EventsItem';
+import {View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 import Events from '../store/Events';
 import Profile from '../store/Profile';
-
 import {Picker} from '@react-native-picker/picker';
+import Feed from '../components/Feed';
 
 const EventsView = observer(() => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -51,14 +50,7 @@ const EventsView = observer(() => {
           />
         ))}
       </Picker>
-      <FlatList
-        ListEmptyComponent={<Text>Пусто =(</Text>}
-        style={{width: '100%'}}
-        data={Events.events}
-        keyExtractor={item => item.id}
-        onEndReached={onEndReached}
-        renderItem={({item}) => <EventsItem item={item} />}
-      />
+      <Feed data={Events.events} onEndReached={onEndReached} />
     </View>
   );
 });
