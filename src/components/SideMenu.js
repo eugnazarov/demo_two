@@ -6,6 +6,7 @@ import CitySelector from './CitySelector';
 import {globalStyles} from '../../globalStyles';
 import {Button, Icon} from 'react-native-elements';
 import {Actions} from 'react-native-router-flux';
+import ProfileView from '../views/ProfileView';
 
 const SideMenu = observer(() => {
   return (
@@ -24,7 +25,8 @@ const SideMenu = observer(() => {
       />
 
       <Text style={globalStyles.fonts.viewTitle}>Культура твоего города</Text>
-      <Text>{Profile.data.user?.name}</Text>
+      {!!Profile.token && <ProfileView />}
+      <Text>Выберите город</Text>
       <CitySelector selected={Profile.currentTown?.name} />
       <Button title="Выход" onPress={() => Profile.logout()} />
     </View>
