@@ -13,7 +13,7 @@ const Feed = ({onEndReached, data, onRefresh, refreshing}) => {
       onRefresh={onRefresh}
       keyExtractor={item => item.id}
       onEndReached={onEndReached}
-      renderItem={({item}) => <EventsItem item={item} />}
+      renderItem={({item}) => <EventsItem key={item.id} item={item} />}
     />
   );
 };

@@ -2,37 +2,18 @@ import React, {useState} from 'react';
 import {Image, Text, TouchableHighlight, View, StyleSheet} from 'react-native';
 import {BASE_URL} from '../../api';
 import Collapsible from 'react-native-collapsible';
+import {Avatar, Badge, ListItem} from 'react-native-elements';
+import {Actions} from 'react-native-router-flux';
 
 const EventsItem = ({item}) => {
-  const [collapsed, setCollapsed] = useState(true);
   return (
-    <TouchableHighlight
-      underlayColor={'#4eb8fe'}
-      onPress={() => {
-        setCollapsed(prevState => !prevState);
-      }}>
-      <View style={{borderBottomWidth: 1}}>
-        <View style={styles.container}>
-          <View style={styles.info}>
-            <Text style={styles.stage}>
-              {item.verified_stages?.map(stage => stage.name)}
-            </Text>
-            <Text style={styles.date}>{item.first_date?.date}</Text>
-            <Text style={styles.title}>{item.title} </Text>
-          </View>
-
-          <Image style={styles.image} source={{uri: item.public_image}} />
-        </View>
-        <Collapsible collapsed={collapsed}>
-          {item.description && (
-            <Text style={styles.content}>{item.description}</Text>
-          )}
-          <Text style={styles.content}>
-            {item.content?.replace(/<\/?[^>]+(>|$)/g, '')}
-          </Text>
-        </Collapsible>
-      </View>
-    </TouchableHighlight>
+    <ListItem onPress={() => Actions.item({item})} bottomDiviver>
+      <Avatar rounded source={{uri: item.public_image}} />
+      <ListItem.Content>
+        {item.first_date && <Badge value={item.first_date.date} />}
+        <ListItem.Title>{item.title}</ListItem.Title>
+      </ListItem.Content>
+    </ListItem>
   );
 };
 

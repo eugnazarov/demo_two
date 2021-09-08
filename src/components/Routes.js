@@ -12,6 +12,7 @@ import {Icon} from 'react-native-elements';
 import CinemaView from '../views/CinemaView';
 import LoginView from '../views/LoginView';
 import GeoNotFoundView from '../views/GeoNotFoundView';
+import ItemView from '../views/ItemView';
 
 const Routes = observer(() => {
   return (
@@ -87,6 +88,13 @@ const Routes = observer(() => {
                 }}
               />
             </Tabs>
+            <Scene
+              key="item"
+              component={ItemView}
+              back
+              titleStyle={{fontSize: 13, flexWrap: 'wrap'}}
+              title={({navigation}) => navigation.state.params.item.title}
+            />
             <Scene
               drawer={false}
               hideNavBar
