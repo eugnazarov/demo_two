@@ -24,7 +24,12 @@ const NewsView = observer(() => {
 
   return (
     <View style={styles.container}>
-      <Feed data={News.news} onEndReached={onEndReached} />
+      <Feed
+        refreshing={News.loading}
+        onRefresh={() => News.fetchNews(Profile.currentTown.id, 1)}
+        data={News.news}
+        onEndReached={onEndReached}
+      />
     </View>
   );
 });

@@ -22,7 +22,12 @@ const Routes = observer(() => {
           contentComponent={SideMenu}
           drawerWidth={311}>
           <Stack key="root">
-            <Scene hideNavBar key="login" component={LoginView} />
+            <Scene
+              hideNavBar
+              key="login"
+              drawer={false}
+              component={LoginView}
+            />
             <Tabs
               tabStyle={{
                 backgroundColor: 'rgba(104,104,104,0.22)',
@@ -82,7 +87,12 @@ const Routes = observer(() => {
                 }}
               />
             </Tabs>
-            <Scene hideNavBar key="geo" component={GeoNotFoundView} />
+            <Scene
+              drawer={false}
+              hideNavBar
+              key="geo"
+              component={GeoNotFoundView}
+            />
           </Stack>
         </Drawer>
       </Router>

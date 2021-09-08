@@ -61,7 +61,14 @@ const EventsView = observer(() => {
           />
         ))}
       </Picker>
-      <Feed data={Events.events} onEndReached={onEndReached} />
+      <Feed
+        refreshing={Events.loading}
+        onRefresh={() =>
+          Events.fetchEvents(Profile.currentTown.id, 1, getCategory())
+        }
+        data={Events.events}
+        onEndReached={onEndReached}
+      />
     </View>
   );
 });

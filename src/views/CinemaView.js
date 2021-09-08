@@ -25,7 +25,12 @@ const CinemaView = observer(() => {
 
   return (
     <View style={styles.container}>
-      <Feed data={Cinema.movies} onEndReached={onEndReached} />
+      <Feed
+        refreshing={Cinema.loading}
+        onRefresh={() => Cinema.fetchMovies(1)}
+        data={Cinema.movies}
+        onEndReached={onEndReached}
+      />
     </View>
   );
 });

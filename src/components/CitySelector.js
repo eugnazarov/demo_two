@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Text, View} from 'react-native';
 import {globalStyles} from '../../globalStyles';
 import {Picker} from '@react-native-picker/picker';
@@ -8,9 +8,15 @@ import {autorun} from 'mobx';
 import {Actions} from 'react-native-router-flux';
 
 const CitySelector = observer(({selected}) => {
-  const [selectedCity, setSelectedCity] = useState(selected);
+  const [selectedCity, setSelectedCity] = useState(null);
 
-  return (
+  useEffect(() => {
+    if (Profile.currentTown) {
+      setSelectedCity(Profile.currentTown.name);
+    }
+  }, [Profile.currentTown]);
+
+  return selectedCity ? (
     <View style={styles.container}>
       <Picker
         testID="basic-picker"
@@ -21,7 +27,7 @@ const CitySelector = observer(({selected}) => {
           fontSize: 17,
         }}
         mode={'modal'}
-        selectedValue={selected}
+        selectedValue={selectedCity}
         onValueChange={(itemValue, index) => {
           setSelectedCity(itemValue);
         }}>
@@ -42,6 +48,8 @@ const CitySelector = observer(({selected}) => {
         }}
       />
     </View>
+  ) : (
+    <Text>Loading</Text>
   );
 });
 
