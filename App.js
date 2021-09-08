@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
 import {SafeAreaView, Text, View, StyleSheet, Button} from 'react-native';
 import {observer} from 'mobx-react-lite';
-import Routes from './components/Routes';
-import Profile from './store/Profile';
+import Routes from './src/components/Routes';
+import Profile from './src/store/Profile';
 import {SafeAreaProvider} from 'react-native-safe-area-context/src/SafeAreaContext';
-import Events from './store/Events';
+import Events from './src/store/Events';
 
 const App = observer(() => {
   useEffect(() => {

@@ -3,7 +3,7 @@ import {Text, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 import Profile from '../store/Profile';
 import CitySelector from './CitySelector';
-import {globalStyles} from '../globalStyles';
+import {globalStyles} from '../../globalStyles';
 import {Button, Icon} from 'react-native-elements';
 import {Actions} from 'react-native-router-flux';
 
@@ -25,7 +25,7 @@ const SideMenu = observer(() => {
 
       <Text style={globalStyles.fonts.viewTitle}>Культура твоего города</Text>
       <CitySelector selected={Profile.currentTown?.name || 'Тольятти'} />
-      <Button title="Выход" onPress={() => Profile.clearProfile()} />
+      <Button title="Выход" onPress={() => Actions.login()} />
     </View>
   );
 });

@@ -1,6 +1,6 @@
 import {action, makeAutoObservable} from 'mobx';
 
-import {getEvents, getNews} from '../api';
+import {getEvents, getNews} from '../../api';
 
 class News {
   news = [];

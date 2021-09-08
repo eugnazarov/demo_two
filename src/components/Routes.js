@@ -1,15 +1,16 @@
 import React from 'react';
 import {Drawer, Router, Scene, Stack, Tabs} from 'react-native-router-flux';
 import SideMenu from './SideMenu';
-import EventsView from '../Views/EventsView';
-import {globalStyles} from '../globalStyles';
+import EventsView from '../views/EventsView';
+import {globalStyles} from '../../globalStyles';
 import {observer} from 'mobx-react-lite';
 import Profile from '../store/Profile';
 import {SafeAreaView} from 'react-native';
 
-import NewsView from '../Views/NewsView';
+import NewsView from '../views/NewsView';
 import {Icon} from 'react-native-elements';
-import CinemaView from '../Views/CinemaView';
+import CinemaView from '../views/CinemaView';
+import LoginView from '../views/LoginView';
 
 const Routes = observer(() => {
   return (
@@ -20,10 +21,12 @@ const Routes = observer(() => {
           contentComponent={SideMenu}
           drawerWidth={311}>
           <Stack key="root">
+            <Scene hideNavBar key="login" component={LoginView} />
             <Tabs
               tabStyle={{
                 backgroundColor: 'rgba(104,104,104,0.22)',
               }}
+              key="homescreen"
               labelStyle={{textTransform: 'uppercase'}}
               hideNavBar>
               <Scene

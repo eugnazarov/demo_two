@@ -1,5 +1,5 @@
 import {action, makeAutoObservable} from 'mobx';
-import {getCategories, getEvents, getMovies, getNews} from '../api';
+import {getCategories, getEvents, getMovies, getNews} from '../../api';
 
 class Cinema {
   movies = [];

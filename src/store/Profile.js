@@ -1,6 +1,6 @@
 import {action, makeAutoObservable} from 'mobx';
 import axios from 'axios';
-import {ALL_CITIES} from '../api';
+import {ALL_CITIES} from '../../api';
 
 class Profile {
   currentTown = null;

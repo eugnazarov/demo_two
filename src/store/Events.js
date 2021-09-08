@@ -1,5 +1,5 @@
 import {action, makeAutoObservable} from 'mobx';
-import {getCategories, getEvents} from '../api';
+import {getCategories, getEvents} from '../../api';
 
 class Events {
   events = [];

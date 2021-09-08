@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Button, Text, View} from 'react-native';
-import {globalStyles} from '../globalStyles';
+import {globalStyles} from '../../globalStyles';
 import {Picker} from '@react-native-picker/picker';
 import Profile from '../store/Profile';
 import {observer} from 'mobx-react-lite';

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Image, Text, TouchableHighlight, View, StyleSheet} from 'react-native';
-import {BASE_URL} from '../api';
+import {BASE_URL} from '../../api';
 import Collapsible from 'react-native-collapsible';
 
 const EventsItem = ({item}) => {
