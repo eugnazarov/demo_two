@@ -4,9 +4,12 @@ import {globalStyles} from '../../globalStyles';
 import {Picker} from '@react-native-picker/picker';
 import Profile from '../store/Profile';
 import {observer} from 'mobx-react-lite';
+import {autorun} from 'mobx';
+import {Actions} from 'react-native-router-flux';
 
 const CitySelector = observer(({selected}) => {
   const [selectedCity, setSelectedCity] = useState(selected);
+
   return (
     <View style={styles.container}>
       <Picker
@@ -18,7 +21,7 @@ const CitySelector = observer(({selected}) => {
           fontSize: 17,
         }}
         mode={'modal'}
-        selectedValue={selectedCity}
+        selectedValue={selected}
         onValueChange={(itemValue, index) => {
           setSelectedCity(itemValue);
         }}>
@@ -35,6 +38,7 @@ const CitySelector = observer(({selected}) => {
         onPress={() => {
           const city = Profile.cities.find(item => item.name === selectedCity);
           Profile.setTown(city);
+          Actions.homescreen();
         }}
       />
     </View>

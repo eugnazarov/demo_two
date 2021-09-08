@@ -1,10 +1,17 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {observer} from 'mobx-react-lite';
+import Geolocation from '@react-native-community/geolocation';
 import {Button, Image, Input} from 'react-native-elements';
 import {Actions} from 'react-native-router-flux';
+import Profile from '../store/Profile';
 
 const LoginView = observer(() => {
+  const onLoginPress = () => {
+    Profile.login('Евгений');
+    Actions.homescreen();
+  };
+
   return (
     <View style={styles.container}>
       <Image
@@ -14,7 +21,7 @@ const LoginView = observer(() => {
       <View style={styles.form}>
         <Input placeholder="E-mail" />
         <Input placeholder="Password" />
-        <Button title="Войти" onPress={() => Actions.homescreen()} />
+        <Button title="Войти" onPress={onLoginPress} />
       </View>
     </View>
   );

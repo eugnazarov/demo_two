@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import Geolocation from '@react-native-community/geolocation';
 import {View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 import Events from '../store/Events';
@@ -13,9 +14,19 @@ const EventsView = observer(() => {
   );
 
   useEffect(() => {
+    Profile.fetchCities();
+    Events.fetchCategories();
+    if (!Profile.currentTown) {
+      Geolocation.getCurrentPosition(pos => Profile.getGeo(pos.coords));
+    }
+  }, []);
+
+  useEffect(() => {
     Events.clearEvents();
-    Events.fetchEvents(Profile.currentTown?.id || 1, 1, getCategory());
-  }, [currentCategory]);
+    if (Profile.currentTown) {
+      Events.fetchEvents(Profile.currentTown.id, 1, getCategory());
+    }
+  }, [currentCategory, Profile.currentTown]);
 
   const loadMore = () => {
     Events.loadMoreEvents(

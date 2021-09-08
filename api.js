@@ -35,3 +35,9 @@ export const getEvents = (cityId, page, category) => {
     );
   }
 };
+
+export const getPosition = ({latitude, longitude}) => {
+  const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=ru`;
+
+  return axios.get(url);
+};

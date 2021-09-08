@@ -24,8 +24,8 @@ const SideMenu = observer(() => {
       />
 
       <Text style={globalStyles.fonts.viewTitle}>Культура твоего города</Text>
-      <CitySelector selected={Profile.currentTown?.name || 'Тольятти'} />
-      <Button title="Выход" onPress={() => Actions.login()} />
+      <CitySelector selected={Profile.currentTown?.name} />
+      <Button title="Выход" onPress={() => Profile.logout()} />
     </View>
   );
 });

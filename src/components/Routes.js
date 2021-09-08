@@ -11,6 +11,7 @@ import NewsView from '../views/NewsView';
 import {Icon} from 'react-native-elements';
 import CinemaView from '../views/CinemaView';
 import LoginView from '../views/LoginView';
+import GeoNotFoundView from '../views/GeoNotFoundView';
 
 const Routes = observer(() => {
   return (
@@ -35,7 +36,6 @@ const Routes = observer(() => {
                 )}
                 key="events"
                 title="Афиша"
-                initial={Profile.currentTown}
                 component={EventsView}
                 titleStyle={{
                   textTransform: 'uppercase',
@@ -82,6 +82,7 @@ const Routes = observer(() => {
                 }}
               />
             </Tabs>
+            <Scene hideNavBar key="geo" component={GeoNotFoundView} />
           </Stack>
         </Drawer>
       </Router>
