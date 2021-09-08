@@ -4,7 +4,7 @@ export const BASE_URL = 'https://yourculture.ru';
 export const API_URL = 'https://yourculture.ru/api';
 
 const API_TOKEN =
-  'v9uYLh70czKPPaHZ3wxPYl232pE3x5v8vlO4WASnfYJCVoBGjlzR5ihX9XUb';
+  'wzKeGKTq6ptjyfry1cg2U5eJJnyW8Btl6PXvoT62pIobXTMaJpQsehBrZ4hW';
 
 export const ALL_CITIES = `${API_URL}/get/cities/all?api_token=${API_TOKEN}`;
 
@@ -17,11 +17,20 @@ export const getNews = (cityId, page) => {
     `${API_URL}/get/news/all/?api_token=${API_TOKEN}&city_id=${cityId}&page=${page}`,
   );
 };
-
 export const getMovies = page => {
   return axios.get(
     `${API_URL}/get/films/all?api_token=${API_TOKEN}&page=${page}&orderBy=date`,
   );
+};
+
+export const auth = (login, password) => {
+  const string = `https://yourculture.ru/api/auth/login?api_token=${API_TOKEN}`;
+  return axios.post(string, {login, password});
+};
+
+export const clearToken = () => {
+  const string = `https://yourculture.ru/api/auth/logout?api_token=${API_TOKEN}`;
+  return axios.post(string);
 };
 
 export const getEvents = (cityId, page, category) => {
@@ -34,6 +43,14 @@ export const getEvents = (cityId, page, category) => {
       `${API_URL}/get/events/all?api_token=${API_TOKEN}&city_id=${cityId}&page=${page}`,
     );
   }
+};
+
+export const getProfile = token => {
+  return axios.get(`${API_URL}/get/user?api_token=${API_TOKEN}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 };
 
 export const getPosition = ({latitude, longitude}) => {

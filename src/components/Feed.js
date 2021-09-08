@@ -7,7 +7,7 @@ const Feed = ({onEndReached, data, onRefresh, refreshing}) => {
   return (
     <FlatList
       ListEmptyComponent={<Text>Пусто =(</Text>}
-      style={{width: '100%'}}
+      style={{width: '100%', marginTop: 15}}
       data={data}
       refreshing={refreshing}
       onRefresh={onRefresh}

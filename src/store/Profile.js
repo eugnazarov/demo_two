@@ -1,9 +1,12 @@
 import {action, makeAutoObservable} from 'mobx';
 import axios from 'axios';
-import {ALL_CITIES, getPosition} from '../../api';
+import {ALL_CITIES, auth, clearToken, getPosition, getProfile} from '../../api';
 import {Actions} from 'react-native-router-flux';
+import {ToastAndroid} from 'react-native';
 
 class Profile {
+  token = '';
+  data = {};
   currentTown = null;
   geoPosition = null;
   cities = [];
@@ -24,7 +27,6 @@ class Profile {
   }
 
   getGeo(position) {
-    console.log('find');
     getPosition(position).then(
       action(res => {
         this.geoPosition = res.data.city;
@@ -39,13 +41,33 @@ class Profile {
   }
 
   logout() {
-    this.name = null;
-    this.geoPosition = null;
-    this.currentTown = null;
-    Actions.login();
+    this.clearProfile();
+    clearToken();
   }
-  login(name) {
-    this.name = name;
+  login(login, password) {
+    auth(login, password).then(
+      action(res => {
+        const {access_token} = res.data.data;
+        console.log(access_token);
+        if (access_token) {
+          this.token = access_token;
+          Actions.homescreen();
+        } else {
+          console.log('error');
+          ToastAndroid.showWithGravity(
+            'Пользователь не найден!',
+            ToastAndroid.SHORT,
+            ToastAndroid.BOTTOM,
+          );
+        }
+      }),
+    );
+  }
+
+  fetchProfile() {
+    getProfile(this.token).then(res => {
+      this.data = res.data.data;
+    });
   }
 
   setTown(town) {
@@ -53,6 +75,7 @@ class Profile {
   }
   clearProfile() {
     this.currentTown = null;
+    this.token = '';
   }
 }
 

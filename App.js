@@ -7,7 +7,11 @@ import {SafeAreaProvider} from 'react-native-safe-area-context/src/SafeAreaConte
 import Events from './src/store/Events';
 
 const App = observer(() => {
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (Profile.token) {
+      Profile.fetchProfile();
+    }
+  }, [Profile.token]);
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{flex: 1}}>

@@ -24,6 +24,7 @@ const SideMenu = observer(() => {
       />
 
       <Text style={globalStyles.fonts.viewTitle}>Культура твоего города</Text>
+      <Text>{Profile.data.user?.name}</Text>
       <CitySelector selected={Profile.currentTown?.name} />
       <Button title="Выход" onPress={() => Profile.logout()} />
     </View>

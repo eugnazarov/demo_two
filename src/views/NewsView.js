@@ -10,7 +10,7 @@ const NewsView = observer(() => {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    News.fetchNews(Profile.currentTown?.id || 1, 1);
+    News.fetchNews(Profile.currentTown.id, 1);
   }, []);
 
   const loadMore = () => {

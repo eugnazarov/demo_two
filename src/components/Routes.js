@@ -23,12 +23,15 @@ const Routes = observer(() => {
           contentComponent={SideMenu}
           drawerWidth={311}>
           <Stack key="root">
-            <Scene
-              hideNavBar
-              key="login"
-              drawer={false}
-              component={LoginView}
-            />
+            {!Profile.token && (
+              <Scene
+                hideNavBar
+                key="login"
+                drawer={false}
+                component={LoginView}
+              />
+            )}
+
             <Tabs
               tabStyle={{
                 backgroundColor: 'rgba(104,104,104,0.22)',

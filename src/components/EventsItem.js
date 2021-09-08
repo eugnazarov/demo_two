@@ -6,12 +6,52 @@ import {Avatar, Badge, ListItem} from 'react-native-elements';
 import {Actions} from 'react-native-router-flux';
 
 const EventsItem = ({item}) => {
+  console.log(item);
   return (
-    <ListItem onPress={() => Actions.item({item})} bottomDiviver>
+    <ListItem onPress={() => Actions.item({item})} bottomDivider>
       <Avatar rounded source={{uri: item.public_image}} />
       <ListItem.Content>
-        {item.first_date && <Badge value={item.first_date.date} />}
-        <ListItem.Title>{item.title}</ListItem.Title>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            width: '100%',
+          }}>
+          {item.first_date && (
+            <Badge
+              badgeStyle={{
+                height: 25,
+                paddingRight: 5,
+                paddingLeft: 5,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              containerStyle={styles.badge}
+              value={item.first_date.date}
+            />
+          )}
+          <View
+            style={{
+              alignItems: 'flex-end',
+            }}>
+            {item.actual_main_categories.map(category => (
+              <Badge
+                badgeStyle={{
+                  height: 25,
+                  paddingRight: 5,
+                  paddingLeft: 5,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                containerStyle={styles.badge}
+                status="success"
+                value={category.name}
+              />
+            ))}
+          </View>
+        </View>
+
+        <ListItem.Title style={styles.title}>{item.title}</ListItem.Title>
       </ListItem.Content>
     </ListItem>
   );
@@ -30,6 +70,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(113,113,113,0.35)',
     width: '100%',
   },
+  badge: {margin: 2},
   stage: {fontStyle: 'italic'},
   content: {fontSize: 16, paddingBottom: 5},
   image: {

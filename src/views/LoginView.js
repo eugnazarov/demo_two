@@ -8,9 +8,11 @@ import Profile from '../store/Profile';
 
 const LoginView = observer(() => {
   const onLoginPress = () => {
-    Profile.login('Евгений');
-    Actions.homescreen();
+    Profile.login(login, password);
   };
+
+  const [login, setLogin] = useState();
+  const [password, setPassword] = useState();
 
   return (
     <View style={styles.container}>
@@ -18,9 +20,29 @@ const LoginView = observer(() => {
         source={require('../assets/logo.png')}
         style={{width: 200, height: 200}}
       />
+      <Text
+        style={{
+          fontWeight: 'bold',
+          marginTop: 15,
+          textTransform: 'uppercase',
+          fontFamily: 'Futura',
+        }}>
+        Культура твоего города
+      </Text>
       <View style={styles.form}>
-        <Input placeholder="E-mail" />
-        <Input placeholder="Password" />
+        <Input
+          value={login}
+          onChangeText={setLogin}
+          placeholder="Login"
+          leftIcon={{type: 'font-awesome', name: 'user'}}
+        />
+        <Input
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+          placeholder="Password"
+          leftIcon={{type: 'font-awesome', name: 'lock'}}
+        />
         <Button title="Войти" onPress={onLoginPress} />
       </View>
     </View>

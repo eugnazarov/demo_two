@@ -18,7 +18,12 @@ const ItemView = ({item}) => {
         <Text style={styles.title} h3>
           {item.title}
         </Text>
-        <Text style={styles.main}>{item.content}</Text>
+        {item.description && (
+          <Text style={styles.main}>{item.description}</Text>
+        )}
+        <Text style={styles.main}>
+          {item.content?.replace(/<\/?[^>]+(>|$)/g, '')}
+        </Text>
       </View>
     </ScrollView>
   );
@@ -29,7 +34,7 @@ export default ItemView;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 10,
+    paddingTop: 5,
     paddingBottom: 40,
     paddingRight: 5,
     paddingLeft: 5,
