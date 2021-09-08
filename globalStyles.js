@@ -4,7 +4,9 @@ export const globalStyles = {
   },
   fonts: {
     viewTitle: {
-      fontSize: 25,
+      fontSize: 20,
+      textTransform: 'uppercase',
+      textAlign: 'center',
     },
   },
 };

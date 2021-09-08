@@ -3,20 +3,31 @@ import {Button, Text, View} from 'react-native';
 import {globalStyles} from '../globalStyles';
 import {Picker} from '@react-native-picker/picker';
 import Profile from '../store/Profile';
-import {observer} from 'mobx-react-lite/src/observer';
+import {observer} from 'mobx-react-lite';
 
 const CitySelector = observer(({selected}) => {
   const [selectedCity, setSelectedCity] = useState(selected);
   return (
     <View style={styles.container}>
       <Picker
-        style={{width: '100%'}}
+        testID="basic-picker"
+        style={{backgroundColor: '#fff'}}
+        itemStyle={{
+          backgroundColor: '#fff',
+          color: 'blue',
+          fontSize: 17,
+        }}
+        mode={'modal'}
         selectedValue={selectedCity}
         onValueChange={(itemValue, index) => {
           setSelectedCity(itemValue);
         }}>
         {Profile.cities.map(city => (
-          <Picker.Item label={city.name} value={city.name} />
+          <Picker.Item
+            style={{backgroundColor: '#fff', color: 'black'}}
+            label={city.name}
+            value={city.name}
+          />
         ))}
       </Picker>
       <Button
@@ -35,7 +46,6 @@ export default CitySelector;
 const styles = {
   container: {
     width: '100%',
-    alignItems: 'center',
     flex: 1,
     justifyContent: 'flex-start',
   },

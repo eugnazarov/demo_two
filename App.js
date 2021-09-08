@@ -1,13 +1,22 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {SafeAreaView, Text, View, StyleSheet, Button} from 'react-native';
 import {observer} from 'mobx-react-lite';
 import Routes from './components/Routes';
+import Profile from './store/Profile';
+import {SafeAreaProvider} from 'react-native-safe-area-context/src/SafeAreaContext';
+import Events from './store/Events';
 
 const App = observer(() => {
+  useEffect(() => {
+    Profile.fetchCities();
+    Events.fetchCategories();
+  }, []);
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <Routes />
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <SafeAreaView style={{flex: 1}}>
+        <Routes />
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 });
 
