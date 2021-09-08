@@ -44,7 +44,11 @@ const EventsView = observer(() => {
         }}
         style={{width: '100%'}}>
         {Events.categories.map(cat => (
-          <Picker.Item label={cat.name} value={cat.name} />
+          <Picker.Item
+            style={{backgroundColor: '#fff', color: 'black'}}
+            label={cat.name}
+            value={cat.name}
+          />
         ))}
       </Picker>
       <FlatList
