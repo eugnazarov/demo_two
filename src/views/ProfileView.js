@@ -7,9 +7,9 @@ const ProfileView = observer(() => {
   console.log(Profile.data.user);
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Имя: {Profile.data.user.name}</Text>
-      <Text style={styles.text}>Город: {Profile.data.user.city.name}</Text>
-      <Text style={styles.text}>E-mail: {Profile.data.user.email}</Text>
+      <Text style={styles.text}>Имя: {Profile.data.user?.name}</Text>
+      <Text style={styles.text}>Город: {Profile.data.user?.city.name}</Text>
+      <Text style={styles.text}>E-mail: {Profile.data.user?.email}</Text>
     </View>
   );
 });
