@@ -5,23 +5,23 @@ import EventsView from '../views/EventsView';
 import {globalStyles} from '../../globalStyles';
 import {observer} from 'mobx-react-lite';
 import Profile from '../store/Profile';
-import {SafeAreaView} from 'react-native';
+import {Platform, SafeAreaView, View} from 'react-native';
 
 import NewsView from '../views/NewsView';
-import {Icon} from 'react-native-elements';
+import {Icon, Text} from 'react-native-elements';
 import CinemaView from '../views/CinemaView';
 import LoginView from '../views/LoginView';
 import GeoNotFoundView from '../views/GeoNotFoundView';
 import ItemView from '../views/ItemView';
+import ProfileView from '../views/ProfileView';
+import NavBar from './NavBar';
+import Events from '../store/Events';
 
 const Routes = observer(() => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <Router>
-        <Drawer
-          drawerIcon={() => <Icon name="menu" type="material" color="#fff" />}
-          contentComponent={SideMenu}
-          drawerWidth={311}>
+        <Drawer contentComponent={SideMenu} drawerWidth={311}>
           <Stack key="root">
             {!Profile.token && (
               <Scene
@@ -31,12 +31,8 @@ const Routes = observer(() => {
                 component={LoginView}
               />
             )}
-
             <Tabs
-              tabStyle={{
-                backgroundColor: 'rgba(104,104,104,0.22)',
-              }}
-              key="homescreen"
+              key="homeScreen"
               labelStyle={{textTransform: 'uppercase'}}
               hideNavBar>
               <Scene
@@ -44,17 +40,19 @@ const Routes = observer(() => {
                   <Icon name="event" type="material" color="#517fa4" />
                 )}
                 key="events"
+                back={false}
                 title="Афиша"
+                rightButtonAction={() => {
+                  Events.toggleCategoryPicker();
+                }}
                 component={EventsView}
                 titleStyle={{
                   textTransform: 'uppercase',
                   fontSize: 25,
                   color: '#fff',
                 }}
-                navigationBarStyle={{
-                  height: 80,
-                  backgroundColor: globalStyles.colors.primary,
-                }}
+                headerMode={Platform.OS === 'ios' ? 'float' : 'screen'}
+                navBar={NavBar}
               />
               <Scene
                 icon={() => (
@@ -68,10 +66,7 @@ const Routes = observer(() => {
                   fontSize: 25,
                   color: '#fff',
                 }}
-                navigationBarStyle={{
-                  height: 80,
-                  backgroundColor: globalStyles.colors.primary,
-                }}
+                navBar={NavBar}
               />
               <Scene
                 key="news"
@@ -80,15 +75,22 @@ const Routes = observer(() => {
                 icon={() => (
                   <Icon name="article" type="material" color="#517fa4" />
                 )}
-                navigationBarStyle={{
-                  height: 80,
-                  backgroundColor: globalStyles.colors.primary,
-                }}
+                navBar={NavBar}
                 titleStyle={{
                   textTransform: 'uppercase',
                   fontSize: 25,
                   color: '#fff',
                 }}
+              />
+              <Scene
+                hideNavBar
+                headerMode={Platform.OS === 'ios' ? 'float' : 'screen'}
+                key="profile"
+                title="Профиль"
+                component={ProfileView}
+                icon={() => (
+                  <Icon name="face" type="material" color="#517fa4" />
+                )}
               />
             </Tabs>
             <Scene

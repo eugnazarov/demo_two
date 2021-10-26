@@ -2,14 +2,30 @@ import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {observer} from 'mobx-react-lite';
 import Profile from '../store/Profile';
+import {Avatar} from 'react-native-elements';
 
 const ProfileView = observer(() => {
-  console.log(Profile.data.user);
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Имя: {Profile.data.user?.name}</Text>
-      <Text style={styles.text}>Город: {Profile.data.user?.city.name}</Text>
-      <Text style={styles.text}>E-mail: {Profile.data.user?.email}</Text>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <Avatar
+          containerStyle={{marginRight: 10}}
+          rounded
+          size="medium"
+          source={{
+            uri:
+              Profile.data.user.avatar ||
+              `https://eu.ui-avatars.com/api/?name=${Profile.data.user.name}`,
+          }}
+        />
+        <Text style={styles.text}>{Profile.data.user.name}</Text>
+      </View>
+
+      <Text style={styles.text}>{Profile.data.user?.city.name}</Text>
+      <Text style={styles.text}>{Profile.data.user?.email}</Text>
+      {Object.values(Profile.data.user).map(t => {
+        console.log(t);
+      })}
     </View>
   );
 });
@@ -26,5 +42,6 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'black',
+    fontSize: 25,
   },
 });

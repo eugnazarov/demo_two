@@ -1,14 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import Geolocation from '@react-native-community/geolocation';
-import {View} from 'react-native';
+import {ActivityIndicator, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
 import Events from '../store/Events';
 import Profile from '../store/Profile';
 import {Picker} from '@react-native-picker/picker';
 import Feed from '../components/Feed';
+import {BottomSheet, Button, Icon, ListItem} from 'react-native-elements';
 
 const EventsView = observer(() => {
   const [currentPage, setCurrentPage] = useState(1);
+
   const [currentCategory, setCurrentCategory] = useState(
     Events.currentCategory,
   );
@@ -24,13 +26,13 @@ const EventsView = observer(() => {
   useEffect(() => {
     Events.clearEvents();
     if (Profile.currentTown) {
-      Events.fetchEvents(Profile.currentTown.id, 1, getCategory());
+      Events.fetchEvents(Profile.currentTown?.id, 1, getCategory());
     }
   }, [currentCategory, Profile.currentTown]);
 
   const loadMore = () => {
     Events.loadMoreEvents(
-      Profile.currentTown.id,
+      Profile.currentTown?.id,
       currentPage + 1,
       getCategory(),
     );
@@ -45,26 +47,37 @@ const EventsView = observer(() => {
     return Events.categories.find(cat => cat.name === currentCategory);
   };
 
+  const list = [
+    ...Events.categories,
+    {
+      name: 'Отмена',
+      onPress: () => Events.toggleCategoryPicker(),
+      textStyle: {color: 'red', alignSelf: 'center'},
+    },
+  ];
+
+  const onCategoryPick = name => {
+    name !== 'Отмена' && setCurrentCategory(name);
+    Events.toggleCategoryPicker();
+  };
+
   return (
     <View style={styles.container}>
-      <Picker
-        selectedValue={currentCategory}
-        onValueChange={value => {
-          setCurrentCategory(value);
-        }}
-        style={{width: '100%'}}>
-        {Events.categories.map(cat => (
-          <Picker.Item
-            style={{backgroundColor: '#fff', color: 'black'}}
-            label={cat.name}
-            value={cat.name}
-          />
+      <BottomSheet
+        isVisible={Events.isCategoryPickerOpened}
+        containerStyle={{backgroundColor: 'rgba(0.5, 0.25, 0, 0.2)'}}>
+        {list.map((l, i) => (
+          <ListItem key={l.id} onPress={() => onCategoryPick(l.name)}>
+            <ListItem.Content>
+              <ListItem.Title style={l.textStyle}>{l.name}</ListItem.Title>
+            </ListItem.Content>
+          </ListItem>
         ))}
-      </Picker>
+      </BottomSheet>
       <Feed
         refreshing={Events.loading}
         onRefresh={() =>
-          Events.fetchEvents(Profile.currentTown.id, 1, getCategory())
+          Events.fetchEvents(Profile.currentTown?.id, 1, getCategory())
         }
         data={Events.events}
         onEndReached={onEndReached}
@@ -86,8 +99,21 @@ const styles = {
     backgroundColor: 'red',
     borderWidth: 1,
   },
+  toolbar: {
+    width: '100%',
+    backgroundColor: '#fff',
+    paddingLeft: 25,
+    paddingTop: 5,
+    paddingBottom: 5,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
   buttons: {
     flexDirection: 'row',
   },
-  container: {flex: 1, width: '100%', alignItems: 'center', padding: 4},
+  container: {
+    position: 'relative',
+    flex: 1,
+    width: '100%',
+  },
 };

@@ -43,6 +43,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginBottom: 9,
   },
-  title: {marginBottom: 15},
+  title: {marginBottom: 15, textAlign: 'center'},
   main: {textAlign: 'justify', fontSize: 15, lineHeight: 20},
 });

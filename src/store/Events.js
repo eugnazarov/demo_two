@@ -6,9 +6,14 @@ class Events {
   loading = false;
   categories = [];
   currentCategory = null;
+  isCategoryPickerOpened = false;
 
   constructor() {
     makeAutoObservable(this);
+  }
+
+  toggleCategoryPicker() {
+    this.isCategoryPickerOpened = !this.isCategoryPickerOpened;
   }
 
   fetchCategories() {
@@ -31,7 +36,7 @@ class Events {
       }),
     );
   }
-  fetchEvents(id, page, category) {
+  fetchEvents(id = 0, page, category) {
     this.loading = true;
     getEvents(id, page, category)
       .then(

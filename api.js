@@ -14,7 +14,9 @@ export const getCategories = () => {
 };
 export const getNews = (cityId, page) => {
   return axios.get(
-    `${API_URL}/get/news/all/?api_token=${API_TOKEN}&city_id=${cityId}&page=${page}`,
+    `${API_URL}/get/news/all/?api_token=${API_TOKEN}&city_id=${
+      cityId || ''
+    }&page=${page}`,
   );
 };
 export const getMovies = page => {
@@ -36,11 +38,15 @@ export const clearToken = () => {
 export const getEvents = (cityId, page, category) => {
   if (category) {
     return axios.get(
-      `${API_URL}/get/events/all?api_token=${API_TOKEN}&city_id=${cityId}&page=${page}&category=${category.slug}`,
+      `${API_URL}/get/events/all?api_token=${API_TOKEN}&city_id=${
+        cityId || ''
+      }&page=${page}&category=${category.slug}`,
     );
   } else {
     return axios.get(
-      `${API_URL}/get/events/all?api_token=${API_TOKEN}&city_id=${cityId}&page=${page}`,
+      `${API_URL}/get/events/all?api_token=${API_TOKEN}&city_id=${
+        cityId || ''
+      }&page=${page}`,
     );
   }
 };

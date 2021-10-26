@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, ActivityIndicator} from 'react-native';
 import {observer} from 'mobx-react-lite';
 import Geolocation from '@react-native-community/geolocation';
 import {Button, Image, Input} from 'react-native-elements';
@@ -43,7 +43,12 @@ const LoginView = observer(() => {
           placeholder="Password"
           leftIcon={{type: 'font-awesome', name: 'lock'}}
         />
-        <Button title="Войти" onPress={onLoginPress} />
+
+        {Profile.loading ? (
+          <ActivityIndicator />
+        ) : (
+          <Button title="Войти" onPress={onLoginPress} />
+        )}
       </View>
     </View>
   );

@@ -2,22 +2,40 @@ import {action, makeAutoObservable} from 'mobx';
 import axios from 'axios';
 import {ALL_CITIES, auth, clearToken, getPosition, getProfile} from '../../api';
 import {Actions} from 'react-native-router-flux';
-import {ToastAndroid} from 'react-native';
+import {AsyncStorage, Platform, ToastAndroid, Alert} from 'react-native';
+import {makePersistable} from 'mobx-persist-store';
 
 class Profile {
+  loading = false;
   token = '';
   data = {};
   currentTown = null;
   geoPosition = null;
   cities = [];
-  name: null;
+  name = null;
+  isDarkMode = false;
+
   constructor() {
     makeAutoObservable(this);
+    makePersistable(this, {
+      name: 'profile',
+      properties: ['token', 'data', 'currentTown', 'geoPosition', 'name'],
+      storage: AsyncStorage,
+    }).then(() => {
+      console.log('persisted');
+    });
   }
+
+  toggleTheme(value) {
+    this.isDarkMode = value;
+  }
+
   fetchCities() {
+    this.loading = true;
     axios.get(ALL_CITIES).then(
       action(res => {
         this.cities = res.data.data.cities;
+        this.loading = false;
       }),
     );
   }
@@ -33,18 +51,18 @@ class Profile {
         const town = this.getTown(res.data.city);
         if (town) {
           this.currentTown = town;
-        } else {
-          Actions.geo({city: res.data.city});
         }
       }),
     );
   }
 
-  logout() {
+  async logout() {
     this.clearProfile();
-    clearToken();
+    await clearToken();
   }
+
   login(login, password) {
+    this.loading = true;
     auth(login, password).then(
       action(res => {
         const {access_token} = res.data.data;
@@ -52,13 +70,18 @@ class Profile {
         if (access_token) {
           this.token = access_token;
           Actions.homescreen();
+          this.loading = false;
         } else {
-          console.log('error');
-          ToastAndroid.showWithGravity(
-            'Пользователь не найден!',
-            ToastAndroid.SHORT,
-            ToastAndroid.BOTTOM,
-          );
+          this.loading = false;
+          if (Platform.OS === 'android') {
+            ToastAndroid.showWithGravity(
+              'Пользователь не найден или неверный пароль',
+              ToastAndroid.SHORT,
+              ToastAndroid.BOTTOM,
+            );
+          } else {
+            Alert.alert('Пользователь не найден или неверный пароль');
+          }
         }
       }),
     );
@@ -71,8 +94,10 @@ class Profile {
   }
 
   setTown(town) {
+    console.log(`${town.name} set`);
     this.currentTown = town;
   }
+
   clearProfile() {
     this.currentTown = null;
     this.token = '';

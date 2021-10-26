@@ -2,11 +2,10 @@ import React, {useState} from 'react';
 import {Image, Text, TouchableHighlight, View, StyleSheet} from 'react-native';
 import {BASE_URL} from '../../api';
 import Collapsible from 'react-native-collapsible';
-import {Avatar, Badge, ListItem} from 'react-native-elements';
+import {Avatar, Badge, ListItem, withTheme} from 'react-native-elements';
 import {Actions} from 'react-native-router-flux';
 
-const EventsItem = ({item}) => {
-  console.log(item);
+const EventsItem = ({item, theme}) => {
   return (
     <ListItem onPress={() => Actions.item({item})} bottomDivider>
       <Avatar rounded source={{uri: item.public_image}} />
@@ -17,19 +16,19 @@ const EventsItem = ({item}) => {
             justifyContent: 'space-between',
             width: '100%',
           }}>
-          {item.first_date && (
-            <Badge
-              badgeStyle={{
-                height: 25,
-                paddingRight: 5,
-                paddingLeft: 5,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              containerStyle={styles.badge}
-              value={item.first_date.date}
-            />
-          )}
+          <Badge
+            status={item.first_date ? 'primary' : 'warning'}
+            badgeStyle={{
+              height: 25,
+              paddingRight: 5,
+              paddingLeft: 5,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            containerStyle={styles.badge}
+            value={item.first_date?.date || 'Online'}
+          />
+
           <View
             style={{
               alignItems: 'flex-end',
@@ -57,7 +56,7 @@ const EventsItem = ({item}) => {
   );
 };
 
-export default EventsItem;
+export default withTheme(EventsItem);
 
 const styles = StyleSheet.create({
   container: {

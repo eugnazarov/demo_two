@@ -10,11 +10,11 @@ const NewsView = observer(() => {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    News.fetchNews(Profile.currentTown.id, 1);
+    News.fetchNews(Profile.currentTown?.id, 1);
   }, []);
 
   const loadMore = () => {
-    News.loadMoreNews(Profile.currentTown.id, currentPage + 1);
+    News.loadMoreNews(Profile.currentTown?.id, currentPage + 1);
   };
 
   const onEndReached = () => {
@@ -26,7 +26,7 @@ const NewsView = observer(() => {
     <View style={styles.container}>
       <Feed
         refreshing={News.loading}
-        onRefresh={() => News.fetchNews(Profile.currentTown.id, 1)}
+        onRefresh={() => News.fetchNews(Profile.currentTown?.id, 1)}
         data={News.news}
         onEndReached={onEndReached}
       />

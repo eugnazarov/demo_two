@@ -2,12 +2,16 @@ import React from 'react';
 import {FlatList, Text, View} from 'react-native';
 import Events from '../store/Events';
 import EventsItem from './EventsItem';
+import {withTheme} from 'react-native-elements';
 
-const Feed = ({onEndReached, data, onRefresh, refreshing}) => {
+const Feed = ({onEndReached, data, onRefresh, refreshing, theme}) => {
   return (
     <FlatList
-      ListEmptyComponent={<Text>Пусто =(</Text>}
-      style={{width: '100%', marginTop: 15}}
+      ListEmptyComponent={
+        <Text style={{position: 'absolute', top: 150}}>
+          {!refreshing && 'Здесь пока ничего нет =('}
+        </Text>
+      }
       data={data}
       refreshing={refreshing}
       onRefresh={onRefresh}
@@ -18,4 +22,4 @@ const Feed = ({onEndReached, data, onRefresh, refreshing}) => {
   );
 };
 
-export default Feed;
+export default withTheme(Feed);
