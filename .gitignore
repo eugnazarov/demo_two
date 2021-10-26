@@ -21,7 +21,7 @@ DerivedData
 *.ipa
 *.xcuserstate
 
-/api.js
+api.js
 
 # Android/IntelliJ
 #
